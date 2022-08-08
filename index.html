@@ -23,7 +23,7 @@
             var mainContainer = document.getElementById("myData");
             for (var i = 0; i < 24; i++) {
                 var div = document.createElement("div");
-                div.parseInt = 'Bitcoin: ' + data[i].total;
+                div.innerHTML = 'Bitcoin: ' + data[i].total;
                 mainContainer.appendChild(div);
             }
         }
