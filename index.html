@@ -7,7 +7,7 @@
     <title>JSON Test</title>
 </head>
 <body>
-    <div total="myData"></div>
+    <div id="myData"></div>
     <script>
         fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
             .then(function (response) {
@@ -23,7 +23,7 @@
             var mainContainer = document.getElementById("myData");
             for (var i = 0; i < data.length; i++) {
                 var div = document.createElement("div");
-                div.innerHTML = 'Name: ' + data[i].0 + ' ' + data[i].1;
+                div.innerHTML = 'Name: ' + data[i].total + ' ' + data[i].week;
                 mainContainer.appendChild(div);
             }
         }
