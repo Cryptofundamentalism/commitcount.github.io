@@ -3,7 +3,7 @@
 </script>
 
 
-
+<script type="module">
 // Octokit.js
 // https://github.com/octokit/core.js#readme
 const octokit = new Octokit({
@@ -14,3 +14,4 @@ await octokit.request('GET /repos/{owner}/{repo}/stats/commit_activity', {
   owner: 'bitcoin',
   repo: 'bitcoin'
 })
+</script>
