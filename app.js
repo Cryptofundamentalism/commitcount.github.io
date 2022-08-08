@@ -88,15 +88,3 @@ function requestUserRepos(username) {
     xhr.send();
 
 }
-
-
-// Octokit.js
-// https://github.com/octokit/core.js#readme
-const octokit = new Octokit({
-  auth: 'personal-access-token123'
-})
-
-await octokit.request('GET /repos/{owner}/{repo}/stats/commit_activity', {
-  owner: 'bitcoin',
-  repo: 'bitcoin'
-})
