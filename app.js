@@ -1,14 +1,5 @@
-function getElement(id) {
-  return document.getElementById(id);
-}
-
-fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
-.then(res => res.json())
-.then((res) => {
-  const data = res.data;
-  getElement('0').innerHTML =  'firstweek: ' + data.firstweek;
-  getElement('1').innerHTML = 'secondweek: ' + data.secondweek;
-  getElement('rank').innerHTML = 'Rank: ' + data.rank;
-  getElement('price').innerHTML = 'Price: ' + data.quotes.USD.price;
-  // do the rest here
-});
+fetch(https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity)
+  // get the JSON data
+  .then(response => response.json())
+  // use (display) the JSON data
+  .then(data => console.log(data))
