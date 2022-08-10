@@ -7,9 +7,10 @@
     <title>crypto commit JSON</title>
 </head>
 <body>
+    Bitcoin:    
     <div id="myData"></div>
     <script>
-        document.write('Bitcoin:');
+        
         fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
             .then(function (response) {
                 return response.json();
