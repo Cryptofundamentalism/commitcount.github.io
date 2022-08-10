@@ -9,6 +9,7 @@
 <body>
     <div id="myData"></div>
     <script>
+        document.write('Bitcoin:');
         fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
             .then(function (response) {
                 return response.json();
@@ -19,7 +20,7 @@
             .catch(function (err) {
                 console.log('error: ' + err);
             });
-        document.write('Bitcoin:');
+        
         function appendData(data) {
            var mainContainer = document.getElementById("myData"); 
             for (var i = 0; i < 1; i++) { 
