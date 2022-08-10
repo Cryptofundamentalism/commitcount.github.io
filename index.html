@@ -33,11 +33,11 @@
         }
     </script>
     
-    Bitcoin:    
-    <div id="myData"></div>
+    Ethereum:    
+    <div id="myDataeth"></div>
     <script>
         
-        fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
+        fetch('https://api.github.com/repos/ethereum/go-ethereum/stats/commit_activity')
             .then(function (response) {
                 return response.json();
             })
@@ -49,10 +49,10 @@
             });
         
         function appendData(data) {
-           var mainContainer = document.getElementById("myData"); 
+           var mainContainer = document.getElementById("myDataeth"); 
             for (var i = 0; i < 1; i++) { 
               var div = document.createElement("div"); 
-              document.getElementById("myData").innerHTML = parseInt(data[i].total, 10)+parseInt(data[i+1].total, 10)+parseInt(data[i+2].total, 10)+parseInt(data[i+3].total, 10)+parseInt(data[i+4].total, 10)+parseInt(data[i+5].total, 10)+parseInt(data[i+6].total, 10)+parseInt(data[i+7].total, 10)+parseInt(data[i+8].total, 10)+parseInt(data[i+9].total, 10)+parseInt(data[i+10].total, 10)+parseInt(data[i+11].total, 10)+parseInt(data[i+12].total, 10);
+              document.getElementById("myDataeth").innerHTML = parseInt(data[i].total, 10)+parseInt(data[i+1].total, 10)+parseInt(data[i+2].total, 10)+parseInt(data[i+3].total, 10)+parseInt(data[i+4].total, 10)+parseInt(data[i+5].total, 10)+parseInt(data[i+6].total, 10)+parseInt(data[i+7].total, 10)+parseInt(data[i+8].total, 10)+parseInt(data[i+9].total, 10)+parseInt(data[i+10].total, 10)+parseInt(data[i+11].total, 10)+parseInt(data[i+12].total, 10);
            
                 
             }
