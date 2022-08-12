@@ -40,29 +40,5 @@
 
     </script>
     
-    <script>
-        
-        fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
-            .then(function (response2) {
-                return response2.json();
-            })
-            .then(function (data2) {
-                appendData(data2);
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });
-        
-        function appendData(data2) {
-           var mainContainer2 = document.getElementById("myData2"); 
-            for (var i = 0; i < 1; i++) { 
-              var div = document.createElement("div"); 
-              document.getElementById("myData2").innerHTML = parseInt(data[i].total, 10)+parseInt(data[i+1].total, 10)+parseInt(data[i+2].total, 10)+parseInt(data[i+3].total, 10)+parseInt(data[i+4].total, 10)+parseInt(data[i+5].total, 10)+parseInt(data[i+6].total, 10)+parseInt(data[i+7].total, 10)+parseInt(data[i+8].total, 10)+parseInt(data[i+9].total, 10)+parseInt(data[i+10].total, 10)+parseInt(data[i+11].total, 10)+parseInt(data[i+12].total, 10);
-           
-                
-            }
-        }
-
-    </script>
 </body>
 </html>
