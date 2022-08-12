@@ -1,3 +1,4 @@
+<body>
 <div id="myData"></div>
 <script>
         
@@ -22,3 +23,4 @@
             }
         }
     </script>
+</body>
