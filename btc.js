@@ -1,3 +1,4 @@
+<div id="myData"></div>
 <script>
         
         fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
