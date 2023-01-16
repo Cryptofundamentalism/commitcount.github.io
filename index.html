@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bitcoin Commits</title>
+    <title>Bitcoin and Ethereum Commits</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <h1>Bitcoin Commits</h1>
-    <div id="commit-count"></div>
+    <h1>Bitcoin and Ethereum Commits</h1>
+    <div id="commit-count-bitcoin"></div>
+    <div id="commit-count-ethereum"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       let date = new Date();
@@ -14,6 +15,7 @@
       let month = date.getMonth() + 1;
       let firstDay = `${year}-${month}-01`;
       let lastDay = new Date(year, month, 0).toISOString().slice(0, 10);
+      
       axios.get(`https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
         .then(response => {
           let commits = response.data;
@@ -21,9 +23,22 @@
           commits.forEach(week => {
             commitCount += week.total;
           });
-          // Use JavaScript to display the commit count
-          let countDiv = document.getElementById("commit-count");
-          countDiv.innerHTML = `Number of commits this month: ${commitCount}`;
+          let countDiv = document.getElementById("commit-count-bitcoin");
+          countDiv.innerHTML = `Number of Bitcoin commits this month: ${commitCount}`;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      axios.get(`https://api.github.com/repos/ethereum/go-ethereum/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
+        .then(response => {
+          let commits = response.data;
+          let commitCount = 0;
+          commits.forEach(week => {
+            commitCount += week.total;
+          });
+          let countDiv = document.getElementById("commit-count-ethereum");
+          countDiv.innerHTML = `Number of Ethereum commits this month: ${commitCount}`;
         })
         .catch(error => {
           console.log(error);
