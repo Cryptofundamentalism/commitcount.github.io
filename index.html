@@ -10,6 +10,9 @@
     
     Bitcoin: <div id="myData"></div>
     Ethereum: <div id="myData2"></div>
+    Cardano: <div id="myData3"></div>
+    Cosmos: <div id="myData4"></div>
+    Solana: <div id="myData5"></div>
     
     <script>
         
@@ -46,8 +49,26 @@
             .catch(function (err) {
                 console.log('error: ' + err);
             });
-    </script>
-    
-</body>
-</html>
+
+        // Fetch commit activity data for Cardano
+        fetch('https://api.github.com/repos/input-output-hk/cardano-sl/stats/commit_activity')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                var mainContainer = document.getElementById("myData3"); 
+                var totalCommits = 0;
+                for (var i = 0; i < 13; i++) { 
+                    totalCommits += data[i].total;
+                }
+                mainContainer.innerHTML = totalCommits;
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+
+        // Fetch commit activity data for Cosmos
+        fetch('https://api.github.com/repos/cosmos/cosmos-sdk/stats/commit_activity')
+            .then(function
+
 
