@@ -10,30 +10,26 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       // Use axios to make an API call to the GitHub API
-      axios.get("https://api.github.com/repos/bitcoin/bitcoin/stats/participation")
-        .then(response => {
-          let activity = response.data;
-          let activityArray = activity.all;
-          // Use JavaScript to create a table and display the activity
-          let table = document.createElement("table");
-          let tableHead = document.createElement("thead");
-          let headRow = document.createElement("tr");
-          let headCell = document.createElement("th");
-          headCell.innerHTML = "Week";
-          headRow.appendChild(headCell);
-          headCell = document.createElement("th");
-          headCell.innerHTML = "Commits";
-          headRow.appendChild(headCell);
-          tableHead.appendChild(headRow);
-          table.appendChild(tableHead);
-          let tableBody = document.createElement("tbody");
-          for (let i = 0; i < activityArray.length; i++) {
-            let row = document.createElement("tr");
-            let cell = document.createElement("td");
-            let date = new Date((activityArray.length - i - 1) * 7 * 24 * 60 * 60 * 1000);
-            cell.innerHTML = `Week of ${date.toDateString()}`;
-            row.appendChild(cell);
-            cell = document.createElement("td");
-            cell.innerHTML = activityArray[i];
-            row.appendChild(cell);
-            tableBody.appendChild(row
+      let date = new Date();
+      let month = date.getMonth();
+      let year = date.getFullYear();
+      for (let i = 0; i < 6; i++) {
+        let monthAgo = new Date(year, month - i, 1);
+        let monthAgoFormated = monthAgo.toISOString().slice(0, 10);
+        axios.get(`https://api.github.com/repos/bitcoin/bitcoin/commits?since=${monthAgoFormated}`)
+          .then(response => {
+            let commits = response.data;
+            let commitCount = commits.length;
+            // Use JavaScript to create a list and display the information
+            let activityDiv = document.getElementById("activity");
+            let activityItem = document.createElement("div");
+            activityItem.innerHTML = `${monthAgoFormated} - ${commitCount} commits`;
+            activityDiv.appendChild(activityItem);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>
