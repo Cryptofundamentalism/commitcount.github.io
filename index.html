@@ -1,35 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bitcoin Commits Activity</title>
+    <title>Bitcoin Commits</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <h1>Bitcoin Commits Activity</h1>
-    <div id="activity"></div>
+    <h1>Bitcoin Commits</h1>
+    <div id="commit-count"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-      // Use axios to make an API call to the GitHub API
       let date = new Date();
-      let month = date.getMonth();
       let year = date.getFullYear();
-      for (let i = 0; i < 6; i++) {
-        let monthAgo = new Date(year, month - i, 1);
-        let monthAgoFormated = monthAgo.toISOString().slice(0, 10);
-        axios.get(`https://api.github.com/repos/bitcoin/bitcoin/commits?since=${monthAgoFormated}`)
-          .then(response => {
-            let commits = response.data;
-            let commitCount = commits.length;
-            // Use JavaScript to create a list and display the information
-            let activityDiv = document.getElementById("activity");
-            let activityItem = document.createElement("div");
-            activityItem.innerHTML = `${monthAgoFormated} - ${commitCount} commits`;
-            activityDiv.appendChild(activityItem);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    </script>
-  </body>
-</html>
+      let month = date.getMonth() + 1;
+      let firstDay = `${year}-${month}-01`;
+      let lastDay = new Date(year, month, 0).toISOString().slice(0, 10);
+      axios.get(`https://api.github.com/repos/bitcoin/bitcoin/commits
