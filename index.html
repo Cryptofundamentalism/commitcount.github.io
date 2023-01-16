@@ -1,74 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>crypto commit JSON</title>
+  <title>GitHub Commit Count</title>
 </head>
+
 <body>
-    
-    Bitcoin: <div id="myData"></div>
-    Ethereum: <div id="myData2"></div>
-    Cardano: <div id="myData3"></div>
-    Cosmos: <div id="myData4"></div>
-    Solana: <div id="myData5"></div>
-    
-    <script>
-        
-        // Fetch commit activity data for Bitcoin
-        fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                var mainContainer = document.getElementById("myData"); 
-                var totalCommits = 0;
-                for (var i = 0; i < 13; i++) { 
-                    totalCommits += data[i].total;
-                }
-                mainContainer.innerHTML = totalCommits;
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });
+  <h1>GitHub Commit Count</h1>
+  <table>
+    <tr>
+      <th>Repository</th>
+      <th>Commit Count</th>
+    </tr>
+    <tr>
+      <td>Bitcoin</td>
+      <td id="bitcoin"></td>
+    </tr>
+    <tr>
+      <td>Ethereum</td>
+      <td id="ethereum"></td>
+    </tr>
+    <tr>
+      <td>Cosmos</td>
+      <td id="cosmos"></td>
+    </tr>
+    <tr>
+      <td>Cardano</td>
+      <td id="cardano"></td>
+    </tr>
+  </table>
 
-        // Fetch commit activity data for Ethereum
-        fetch('https://api.github.com/repos/ethereum/ethereum/stats/commit_activity')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                var mainContainer = document.getElementById("myData2"); 
-                var totalCommits = 0;
-                for (var i = 0; i < 13; i++) { 
-                    totalCommits += data[i].total;
-                }
-                mainContainer.innerHTML = totalCommits;
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });
+  <script>
+    // Fetch commit count for each repository
+    fetch('https://api.github.com/repos/bitcoin/bitcoin/commits?since=3months')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('bitcoin').innerHTML = data.length;
+      });
+    fetch('https://api.github.com/repos/ethereum/ethereum/commits?since=3months')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ethereum').innerHTML = data.length;
+      });
+    fetch('https://api.github.com/repos/cosmos/cosmos/commits?since=3months')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('cosmos').innerHTML = data.length;
+      });
+    fetch('https://api.github.com/repos/cardano/cardano-node/commits?since=3months')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('cardano').innerHTML = data.length;
+      });
+  </script>
+</body>
 
-        // Fetch commit activity data for Cardano
-        fetch('https://api.github.com/repos/input-output-hk/cardano-sl/stats/commit_activity')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                var mainContainer = document.getElementById("myData3"); 
-                var totalCommits = 0;
-                for (var i = 0; i < 13; i++) { 
-                    totalCommits += data[i].total;
-                }
-                mainContainer.innerHTML = totalCommits;
-            })
-            .catch(function (err) {
-                console.log('error: ' + err);
-            });
-
-        // Fetch commit activity data for Cosmos
-        fetch('https://api.github.com/repos/cosmos/cosmos-sdk/stats/commit_activity')
-            .then(function
-
-
+</html>
