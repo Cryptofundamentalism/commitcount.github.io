@@ -9,36 +9,45 @@
 <body>
     
     Bitcoin: <div id="myData"></div>
-    
     Ethereum: <div id="myData2"></div>
-    
-
-    
     
     <script>
         
+        // Fetch commit activity data for Bitcoin
         fetch('https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity')
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                appendData(data);
+                var mainContainer = document.getElementById("myData"); 
+                var totalCommits = 0;
+                for (var i = 0; i < 13; i++) { 
+                    totalCommits += data[i].total;
+                }
+                mainContainer.innerHTML = totalCommits;
             })
             .catch(function (err) {
                 console.log('error: ' + err);
             });
-        
-        function appendData(data) {
-           var mainContainer = document.getElementById("myData"); 
-            for (var i = 0; i < 1; i++) { 
-              var div = document.createElement("div"); 
-              document.getElementById("myData").innerHTML = parseInt(data[i].total, 10)+parseInt(data[i+1].total, 10)+parseInt(data[i+2].total, 10)+parseInt(data[i+3].total, 10)+parseInt(data[i+4].total, 10)+parseInt(data[i+5].total, 10)+parseInt(data[i+6].total, 10)+parseInt(data[i+7].total, 10)+parseInt(data[i+8].total, 10)+parseInt(data[i+9].total, 10)+parseInt(data[i+10].total, 10)+parseInt(data[i+11].total, 10)+parseInt(data[i+12].total, 10);
-           
-                
-            }
-        }
 
+        // Fetch commit activity data for Ethereum
+        fetch('https://api.github.com/repos/ethereum/ethereum/stats/commit_activity')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                var mainContainer = document.getElementById("myData2"); 
+                var totalCommits = 0;
+                for (var i = 0; i < 13; i++) { 
+                    totalCommits += data[i].total;
+                }
+                mainContainer.innerHTML = totalCommits;
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
     </script>
     
 </body>
 </html>
+
