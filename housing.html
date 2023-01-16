@@ -2,20 +2,12 @@
 <html>
   <head>
     <title>Income, House Price, and Mortgage Rate Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   </head>
   <body>
-    <table id="data-table">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Income</th>
-          <th>House Price</th>
-          <th>Mortgage Rate</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+    <div id="chart-container">
+      <canvas id="chart"></canvas>
+    </div>
   </body>
   <script>
     // Create empty data object
@@ -72,3 +64,5 @@
             data[year] = { mortgageRate: mortgageRate };
           }
         }
+        // Create arrays for chart data
+       
