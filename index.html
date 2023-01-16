@@ -14,7 +14,7 @@
           let top50List = document.getElementById("top50");
           top50Coins.forEach(coin => {
             // Use axios to make another API call to the GitHub API for each cryptocurrency 
-            axios.get(`https://api.github.com/repos/${coin.name}/${coin.name}/commits?access_token=<Your_token>`)
+            axios.get(`https://api.github.com/repos/${coin.name}/${coin.name}/commits`)
               .then(response => {
                 let commits = response.data;
                 let commitCount = commits.length;
@@ -34,3 +34,4 @@
     </script>
   </body>
 </html>
+
