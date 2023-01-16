@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bitcoin and Ethereum Commits</title>
+    <title>Commit Count for multiple Repositories</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <h1>Bitcoin and Ethereum Commits</h1>
+    <h1>Commit Count for multiple Repositories</h1>
     <div id="commit-count-bitcoin"></div>
     <div id="commit-count-ethereum"></div>
+    <div id="commit-count-solana"></div>
+    <div id="commit-count-polkadot"></div>
+    <div id="commit-count-cardano"></div>
+    <div id="commit-count-cosmos"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       let date = new Date();
@@ -15,34 +19,50 @@
       let month = date.getMonth() + 1;
       let firstDay = `${year}-${month}-01`;
       let lastDay = new Date(year, month, 0).toISOString().slice(0, 10);
-      
-      axios.get(`https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
-        .then(response => {
-          let commits = response.data;
-          let commitCount = 0;
-          commits.forEach(week => {
-            commitCount += week.total;
-          });
-          let countDiv = document.getElementById("commit-count-bitcoin");
-          countDiv.innerHTML = `Number of Bitcoin commits this month: ${commitCount}`;
-        })
-        .catch(error => {
-          console.log(error);
-        });
 
-      axios.get(`https://api.github.com/repos/ethereum/go-ethereum/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
-        .then(response => {
-          let commits = response.data;
-          let commitCount = 0;
-          commits.forEach(week => {
-            commitCount += week.total;
+      let repositories = [
+        {
+          name: 'bitcoin',
+          repo: 'bitcoin/bitcoin',
+        },
+        {
+          name: 'ethereum',
+          repo: 'ethereum/go-ethereum',
+        },
+        {
+          name: 'solana',
+          repo: 'solana/solana',
+        },
+        {
+          name: 'polkadot',
+          repo: 'polkadot-ecosystem/polkadot',
+        },
+        {
+          name: 'cardano',
+          repo: 'cardano/cardano',
+        },
+        {
+          name: 'cosmos',
+          repo: 'cosmos/cosmos',
+        }
+      ];
+
+      repositories.forEach(repository => {
+        axios.get(`https://api.github.com/repos/${repository.repo}/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
+          .then(response => {
+            let commits = response.data;
+            let commitCount = 0;
+            commits.forEach(week => {
+              commitCount += week.total;
+            });
+            let countDiv = document.getElementById(`commit-count-${repository.name}`);
+            countDiv.innerHTML = `Number of ${repository.name} commits this month: ${commitCount}`;
+          })
+          .catch(error => {
+            console.log(error);
           });
-          let countDiv = document.getElementById("commit-count-ethereum");
-          countDiv.innerHTML = `Number of Ethereum commits this month: ${commitCount}`;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      });
     </script>
   </body>
 </html>
+
