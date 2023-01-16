@@ -2,58 +2,40 @@
 <html>
 
 <head>
-
   <title>GitHub Commit Count</title>
 </head>
 
 <body>
   <h1>GitHub Commit Count</h1>
-  <table>
+  <table id="crypto-table">
     <tr>
-      <th>Repository</th>
+      <th>Name</th>
       <th>Commit Count</th>
-    </tr>
-    <tr>
-      <td>Bitcoin</td>
-      <td id="bitcoin"></td>
-    </tr>
-    <tr>
-      <td>Ethereum</td>
-      <td id="ethereum"></td>
-    </tr>
-    <tr>
-      <td>Cosmos</td>
-      <td id="cosmos"></td>
-    </tr>
-    <tr>
-      <td>Cardano</td>
-      <td id="cardano"></td>
     </tr>
   </table>
 
   <script>
-    // Fetch commit count for each repository
-    fetch('https://api.github.com/repos/bitcoin/bitcoin/commits?since=3months')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('bitcoin').innerHTML = data.length;
-      });
-    fetch('https://api.github.com/repos/ethereum/ethereum/commits?since=3months')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('ethereum').innerHTML = data.length;
-      });
-    fetch('https://api.github.com/repos/cosmos/cosmos/commits?since=3months')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('cosmos').innerHTML = data.length;
-      });
-    fetch('https://api.github.com/repos/cardano/cardano-node/commits?since=3months')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('cardano').innerHTML = data.length;
-      });
+    // Fetch top 50 crypto from CoinGecko API
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false')
+    .then(response => response.json())
+    .then(data => {
+        let cryptoList = data;
+        let cryptoTable = document.getElementById("crypto-table");
+        for (let i in cryptoList) {
+            let row = cryptoTable.insertRow();
+            let name = row.insertCell(0);
+            let commit = row.insertCell(1);
+            name.innerHTML = cryptoList[i].name;
+            // Fetch commit count for each repository
+            fetch(`https://api.github.com/repos/${cryptoList[i].name.toLowerCase()}/${cryptoList[i].name.toLowerCase()}/commits?since=6weeks`)
+            .then(response => response.json())
+            .then(data => {
+                commit.innerHTML = data.length;
+            });
+        }
+    });
   </script>
 </body>
 
 </html>
+
