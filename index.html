@@ -14,10 +14,13 @@
       let month = date.getMonth() + 1;
       let firstDay = `${year}-${month}-01`;
       let lastDay = new Date(year, month, 0).toISOString().slice(0, 10);
-      axios.get(`https://api.github.com/repos/bitcoin/bitcoin/commits?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
+      axios.get(`https://api.github.com/repos/bitcoin/bitcoin/stats/commit_activity?since=${firstDay}T00:00:00Z&until=${lastDay}T23:59:59Z`)
         .then(response => {
           let commits = response.data;
-          let commitCount = commits.length;
+          let commitCount = 0;
+          commits.forEach(week => {
+            commitCount += week.total;
+          });
           // Use JavaScript to display the commit count
           let countDiv = document.getElementById("commit-count");
           countDiv.innerHTML = `Number of commits this month: ${commitCount}`;
