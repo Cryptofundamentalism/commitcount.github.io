@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bitcoin Commits</title>
+    <title>Bitcoin Commits Activity</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <h1>Bitcoin Commits</h1>
-    <div id="commit-count"></div>
+    <h1>Bitcoin Commits Activity</h1>
+    <div id="activity"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       // Use axios to make an API call to the GitHub API
-      axios.get("https://api.github.com/repos/bitcoin/bitcoin/commits?since=2022-01-01T00:00:00Z")
+      axios.get("https://api.github.com/repos/bitcoin/bitcoin/stats/participation")
         .then(response => {
-          let commits = response.data;
-          let commitCount = commits.length;
-          // Use JavaScript to display the commit count
-          let countDiv = document.getElementById("commit-count");
-          countDiv.innerHTML = `Number of commits this year: ${commitCount}`;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    </script>
-  </body>
-</html>
+          let activity = response.data;
+          let activityArray = activity.all;
+          // Use JavaScript to create a table and display the activity
+          let table = document.createElement("table");
+          let tableHead = document.createElement("thead");
+          let headRow = document.createElement("tr");
+          let headCell = document.createElement("th");
+          headCell.innerHTML = "Week";
+          headRow.appendChild(headCell);
+          headCell = document.createElement("th");
+          headCell.innerHTML = "Commits";
+          headRow.appendChild(headCell);
+          tableHead.appendChild(headRow);
+          table.appendChild(tableHead);
+          let tableBody = document.createElement("tbody");
+          for (let i = 0; i < activityArray.length; i++) {
+            let row = document.createElement("tr");
+            let cell = document.createElement("td");
+            let date = new Date((activityArray.length - i - 1) * 7 * 24 * 60 * 60 * 1000);
+            cell.innerHTML = `Week of ${date.toDateString()}`;
+            row.appendChild(cell);
+            cell = document.createElement("td");
+            cell.innerHTML = activityArray[i];
+            row.appendChild(cell);
+            tableBody.appendChild(row
