@@ -1,41 +1,23 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>GitHub Commit Count</title>
-</head>
-
-<body>
-  <h1>GitHub Commit Count</h1>
-  <table id="crypto-table">
-    <tr>
-      <th>Name</th>
-      <th>Commit Count</th>
-    </tr>
-  </table>
-
-  <script>
-    // Fetch top 50 crypto from CoinGecko API
-    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false')
-    .then(response => response.json())
-    .then(data => {
-        let cryptoList = data;
-        let cryptoTable = document.getElementById("crypto-table");
-        for (let i in cryptoList) {
-            let row = cryptoTable.insertRow();
-            let name = row.insertCell(0);
-            let commit = row.insertCell(1);
-            name.innerHTML = cryptoList[i].name;
-            // Fetch commit count for each repository
-            fetch(`https://api.github.com/repos/${cryptoList[i].name.toLowerCase()}/${cryptoList[i].name.toLowerCase()}/commits?since=6weeks`)
-            .then(response => response.json())
-            .then(data => {
-                commit.innerHTML = data.length;
-            });
-        }
+axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1")
+  .then(response => {
+    // HTML code to create a list and display the information
+    let top50Coins = response.data;
+    top50Coins.forEach(coin => {
+        // Use axios to make another API call to the GitHub API for each cryptocurrency 
+        axios.get(`https://api.github.com/repos/${coin.name}/${coin.name}/commits`)
+          .then(response => {
+            // Use JavaScript to count the number of commits
+            let commits = response.data;
+            let commitCount = commits.length;
+            console.log(`${coin.name} has ${commitCount} commits in the last 60 days`);
+          })
+          .catch(error => {
+            console.log(error);
+          });
     });
-  </script>
-</body>
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
-</html>
 
