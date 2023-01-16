@@ -1,1 +1,74 @@
-tedst
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Income, House Price, and Mortgage Rate Data</title>
+  </head>
+  <body>
+    <table id="data-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Income</th>
+          <th>House Price</th>
+          <th>Mortgage Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </body>
+  <script>
+    // Create empty data object
+    let data = {};
+    // Fetch income data
+    fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MEHOINUSA646N.csv")
+      .then(response => response.text())
+      .then(csv => {
+        // Split data by new line
+        let rows = csv.split("\n");
+        // Loop through each row
+        for (let i = 1; i < rows.length; i++) {
+          let cells = rows[i].split(",");
+          let year = cells[0];
+          let income = cells[1];
+          // Add data to object
+          data[year] = { income: income };
+        }
+        // Fetch house price data
+        return fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MSPUS.csv");
+      })
+      .then(response => response.text())
+      .then(csv => {
+        // Split data by new line
+        let rows = csv.split("\n");
+        // Loop through each row
+        for (let i = 1; i < rows.length; i++) {
+          let cells = rows[i].split(",");
+          let year = cells[0];
+          let housePrice = cells[1];
+          // Add data to object
+          if (data[year]) {
+            data[year].housePrice = housePrice;
+          } else {
+            data[year] = { housePrice: housePrice };
+          }
+        }
+        // Fetch Mortgage Rate data
+        return fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MORTGAGE30US.csv");
+      })
+      .then(response => response.text())
+      .then(csv => {
+        // Split data by new line
+        let rows = csv.split("\n");
+        // Loop through each row
+        for (let i = 1; i < rows.length; i++) {
+          let cells = rows[i].split(",");
+          let year = cells[0];
+          let mortgageRate = cells[1];
+          // Add data to object
+          if (data[year]) {
+            data[year].mortgageRate = mortgageRate;
+          } else {
+            data[year] = { mortgageRate: mortgageRate };
+          }
+        }tedst
