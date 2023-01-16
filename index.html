@@ -15,3 +15,16 @@
       let firstDay = `${year}-${month}-01`;
       let lastDay = new Date(year, month, 0).toISOString().slice(0, 10);
       axios.get(`https://api.github.com/repos/bitcoin/bitcoin/commits
+        .then(response => {
+        let commits = response.data;
+        let commitCount = commits.length;
+        // Use JavaScript to display the commit count
+        let countDiv = document.getElementById("commit-count");
+        countDiv.innerHTML = `Number of commits this month (${firstDay} - ${lastDay}): ${commitCount}`;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    </script>
+  </body>
+</html>
