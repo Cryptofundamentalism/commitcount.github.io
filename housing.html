@@ -24,7 +24,7 @@
     fetch('morgagerate.json')
       .then(response => response.json())
       .then(data => {
-        let mortgageRate = data.rate;
+        let mortgageRate = data.MORTGAGE30US;
          fetch('income.json')
       .then(response => response.json())
       .then(data => {
