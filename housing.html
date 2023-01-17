@@ -7,15 +7,15 @@
   <div id="data"></div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
-  <script>fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/houseprice.json')
+  <script>fetch('houseprice.json')
   .then(response => response.json())
   .then(data => {
     let housePrice = data.median_price;
-    fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/morgagerate.json')
+    fetch('morgagerate.json')
       .then(response => response.json())
       .then(data => {
         let mortgageRate = data.rate;
-        fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/income.json')
+        fetch('income.json')
           .then(response => response.json())
           .then(data => {
             let income = data.income;
