@@ -33,15 +33,22 @@
                 let filteredData = data.filter(entry => entry.DATE.endsWith("-01-01"));
                 console.log(filteredData);
                 let income = filteredData.map(entry => entry.MEHOINUSA646N);
+for (let i = 0; i < years.length; i++) {
+  let medianPrice = firstDayOfEachYear[i].MSPUS;
+  let mortgageRate = data[i].MORTGAGE30US;
+  let income = filteredData[i].MEHOINUSA646N;
 
-                // Calculate mortgage payment
-                let principal = medianPrice;
-                let rate = mortgageRate/100/12; // convert annual rate to monthly rate
-                let term = 30*12; // convert 30 years to number of months
-                let mortgagePayment = (principal*rate*(Math.pow(1+rate,term)))/(Math.pow(1+rate,term)-1);
+  // Calculate mortgage payment
+  let principal = medianPrice;
+  let rate = mortgageRate/100/12; // convert annual rate to monthly rate
+  let term = 30*12; // convert 30 years to number of months
+  let mortgagePayment = (principal*rate*(Math.pow(1+rate,term)))/(Math.pow(1+rate,term)-1);
 
-                // Calculate percentage of income spent on mortgage
-                let percentage = (mortgagePayment/income)*100;
+  // Calculate percentage of income spent on mortgage
+  let percentage = (mortgagePayment/income)*100;
+  console.log(`Year: ${years[i]} - Percentage of income spent on a 30-year mortgage: ${percentage}%`);
+}
+
 
                 document.getElementById("data").innerHTML += '<p> Percentage of income spent on a 30-year mortgage: ' + percentage + '%</p>';
 
