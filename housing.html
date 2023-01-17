@@ -6,79 +6,66 @@
 <body>
   <div id="data"></div>
   
-  <script>
-    // Fetch median house price
-    fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/houseprice.json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("data").innerHTML += '<p> Median House Price: ' + data.median_price + '</p>';
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
-
-    // Fetch mortgage rate
+  <script>fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/houseprice.json')
+  .then(response => response.json())
+  .then(data => {
+    let housePrice = data.median_price;
     fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/morgagerate.json')
       .then(response => response.json())
       .then(data => {
-        document.getElementById("data").innerHTML += '<p> Mortgage Rate: ' + data.rate + '%</p>';
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
-
-    // Fetch median income
-    fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/income.json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("data").innerHTML += '<p> Median Income: ' + data.income + '</p>';
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
-    
-    income = data.income;
-
-// Calculate mortgage payment
-let principal = housePrice;
-let rate = mortgageRate/100/12; // convert annual rate to monthly rate
-let term = 30*12; // convert 30 years to number of months
-let mortgagePayment = (principal*rate*(Math.pow(1+rate,term)))/(Math.pow(1+rate,term)-1);
-
-// Calculate percentage of income spent on mortgage
-percentage = (mortgagePayment/income)*100;
-
-document.getElementById("data").innerHTML += '<p> Percentage of income spent on a 30-year mortgage: ' + percentage + '%</p>';
-    
-    let ctx = document.getElementById('myChart').getContext('2d');
-let chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Percentage of Income'],
-        datasets: [{
-            label: 'Mortgage Payment',
-            data: [percentage],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 100,
-                ticks: {
-                    callback: function(value) {
-                        return value + "%"
+        let mortgageRate = data.rate;
+        fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/raw/main/income.json')
+          .then(response => response.json())
+          .then(data => {
+            let income = data.income;
+  
+            // Calculate mortgage payment
+            let principal = housePrice;
+            let rate = mortgageRate/100/12; // convert annual rate to monthly rate
+            let term = 30*12; // convert 30 years to number of months
+            let mortgagePayment = (principal*rate*(Math.pow(1+rate,term)))/(Math.pow(1+rate,term)-1);
+  
+            // Calculate percentage of income spent on mortgage
+            let percentage = (mortgagePayment/income)*100;
+  
+            document.getElementById("data").innerHTML += '<p> Percentage of income spent on a 30-year mortgage: ' + percentage + '%</p>';
+  
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Percentage of Income'],
+                    datasets: [{
+                        label: 'Mortgage Payment',
+                        data: [percentage],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + "%"
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        }
-    }
-});
-
+            });
+          })
+      })
+  })
+  .catch(error => {
+    console.error('Error loading data:', error);
+  });
   </script>
+  <canvas id="myChart"></canvas>
+
 </body>
 </html>
 
