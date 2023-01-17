@@ -38,6 +38,12 @@ for (let i = 0; i < years.length; i++) {
   let mortgageRate = mortgageRate[i].MORTGAGE30US;
   let income = filteredData[i].MEHOINUSA646N;
   if(income && mortgageRate && medianPrice && income !== 0) {
+   let percentages = [];
+for (let i = 0; i < years.length; i++) {
+  let medianPrice = firstDayOfEachYear[i].MSPUS;
+  let mortgageRate = mortgageRate[i].MORTGAGE30US;
+  let income = filteredData[i].MEHOINUSA646N;
+  if(income && mortgageRate && medianPrice && income !== 0) {
     // Calculate mortgage payment
     let principal = medianPrice;
     let rate = mortgageRate/100/12; // convert annual rate to monthly rate
@@ -46,12 +52,41 @@ for (let i = 0; i < years.length; i++) {
 
     // Calculate percentage of income spent on mortgage
     let percentage = (mortgagePayment/income)*100;
+    percentages.push(percentage);
     console.log(`Year: ${years[i]} - Percentage of income spent on a 30-year mortgage: ${percentage}%`);
     document.getElementById("data").innerHTML += `<p> Year: ${years[i]} - Percentage of income spent on a 30-year mortgage: ${percentage}%</p>`;
   }else{
     console.log("Data missing for year: ", years[i]);
   }
 }
+
+let ctx = document.getElementById('myChart').getContext('2d');
+let chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: years,
+        datasets: [{
+            label: 'Mortgage Payment',
+            data: percentages,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    callback: function(value) {
+                        return value + "%"
+                    }
+                }
+            }
+        }
+    }
+});
 
 </script>
 <canvas id="myChart"></canvas>
