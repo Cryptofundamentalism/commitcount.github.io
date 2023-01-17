@@ -1,68 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Income, House Price, and Mortgage Rate Data</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  </head>
-  <body>
-    <div id="chart-container">
-      <canvas id="chart"></canvas>
-    </div>
-  </body>
+<head>
+  <title>My Chart</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.2.0/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+<body>
+  <canvas id="myChart"></canvas>
+  
   <script>
-    // Create empty data object
-    let data = {};
-    // Fetch income data
-    fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MEHOINUSA646N.csv")
+    fetch('https://github.com/Cryptofundamentalism/commitcount.github.io/blob/main/MEHOINUSA646N.csv')
       .then(response => response.text())
-      .then(csv => {
-        // Split data by new line
-        let rows = csv.split("\n");
-        // Loop through each row
-        for (let i = 1; i < rows.length; i++) {
-          let cells = rows[i].split(",");
-          let year = cells[0];
-          let income = cells[1];
-          // Add data to object
-          data[year] = { income: income };
-        }
-        // Fetch house price data
-        return fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MSPUS.csv");
-      })
-      .then(response => response.text())
-      .then(csv => {
-        // Split data by new line
-        let rows = csv.split("\n");
-        // Loop through each row
-        for (let i = 1; i < rows.length; i++) {
-          let cells = rows[i].split(",");
-          let year = cells[0];
-          let housePrice = cells[1];
-          // Add data to object
-          if (data[year]) {
-            data[year].housePrice = housePrice;
-          } else {
-            data[year] = { housePrice: housePrice };
+      .then(data => {
+        Papa.parse(data, {
+          complete: function(results) {
+            var labels = [], data = [];
+            for(var i=1; i < results.data.length; i++){
+                labels.push(results.data[i][0]);
+                data.push(results.data[i][1]);
+            }
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Commits',
+                        data: data,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
           }
-        }
-        // Fetch Mortgage Rate data
-        return fetch("https://raw.githubusercontent.com/Cryptofundamentalism/commitcount.github.io/main/MORTGAGE30US.csv");
+        });
       })
-      .then(response => response.text())
-      .then(csv => {
-        // Split data by new line
-        let rows = csv.split("\n");
-        // Loop through each row
-        for (let i = 1; i < rows.length; i++) {
-          let cells = rows[i].split(",");
-          let year = cells[0];
-          let mortgageRate = cells[1];
-          // Add data to object
-          if (data[year]) {
-            data[year].mortgageRate = mortgageRate;
-          } else {
-            data[year] = { mortgageRate: mortgageRate };
-          }
-        }
-        // Create arrays for chart data
-       
+      .catch(error => {
+        console.error('Error loading data:', error);
+      });
+  </script>
+</body>
+</html>
+
