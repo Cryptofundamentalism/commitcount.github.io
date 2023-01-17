@@ -5,6 +5,7 @@
 </head>
 <body>
   <div id="data"></div>
+  <canvas id="myChart" width="600" height="400"></canvas>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script>
     fetch('houseprice.json')
@@ -87,10 +88,6 @@ let chart = new Chart(ctx, {
         }
     }
 });
-<canvas id="myChart"></canvas>
-    <canvas id="myChart" width="600" height="400"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-
 </script>
 </body>
 </html>
